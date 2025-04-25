@@ -5,13 +5,15 @@ class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final bool enabled;
   final TextInputType? type;
-  const MyTextField({super.key, required this.text, required this.controller, this.enabled =true ,this.type});
+  final int? length;
+  const MyTextField({super.key, required this.text, required this.controller, this.enabled =true ,this.type, this.length});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        maxLength: length,
       decoration: InputDecoration(
       enabled: enabled,
       filled: true,

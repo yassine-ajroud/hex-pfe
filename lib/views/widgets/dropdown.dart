@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TypeInput extends StatefulWidget {
-  const TypeInput({super.key});
+  final String? value;
+  final bool? enabled;
+  const TypeInput({super.key,this.value , this.enabled});
 
   @override
   State<TypeInput> createState() => _TypeInputState();
@@ -12,7 +14,7 @@ class _TypeInputState extends State<TypeInput> {
 
   @override
   void initState() {
-    type='One';
+    type=widget.value??'Nikon';
     super.initState();
   }
   @override
@@ -41,7 +43,7 @@ class _TypeInputState extends State<TypeInput> {
                     type = newValue!;
                   });
                 },
-                items: <String>['One', 'Two', 'Free', 'Four']
+                items: <String>['Nikon', 'Spectra', 'Trimble']
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

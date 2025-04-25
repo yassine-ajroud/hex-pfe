@@ -1,30 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sle_stock/core/styles/colors.dart';
 import 'package:sle_stock/core/styles/text_styles.dart';
+import 'package:sle_stock/models/product.dart';
+import 'package:sle_stock/views/screens/details_screen.dart';
 import 'package:sle_stock/views/widgets/button.dart';
 import 'package:sle_stock/views/widgets/dropdown.dart';
 import 'package:sle_stock/views/widgets/text_field.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+class UpdateScreen extends StatefulWidget {
+  final Product product;
+  const UpdateScreen({super.key , required this.product});
 
   @override
-  State<AddScreen> createState() => _AddScreenState();
+  State<UpdateScreen> createState() => _UpdateScreenState();
 }
 
-
-class _AddScreenState extends State<AddScreen> {
+class _UpdateScreenState extends State<UpdateScreen> {
    late final TextEditingController code;  
       late final TextEditingController nom;  
    late final TextEditingController quantity;  
+   String type='';
 
 @override
   void initState() {
     code =TextEditingController();
-        nom =TextEditingController();
+    nom =TextEditingController();
     quantity =TextEditingController();
 
-    code.text='2345462446878';
+    code.text=widget.product.code;
+    nom.text = widget.product.title;
+    quantity.text = widget.product.quantity.toString();
+    type=widget.product.type;
     super.initState();
   }
 
@@ -41,7 +48,7 @@ class _AddScreenState extends State<AddScreen> {
       backgroundColor: Colors.white,
        appBar: AppBar(
         backgroundColor: MyColors.primary,
-        title: Text('Ajouter produit',style: MyTextStyles.appBarTextStyle,),
+        title: Text('Modifier produit',style: MyTextStyles.appBarTextStyle,),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -52,8 +59,7 @@ class _AddScreenState extends State<AddScreen> {
               const SizedBox(height: 10,),
               MyTextField(text: 'code',controller: code,enabled: false,),
               MyTextField(text: 'nom',controller: nom),
-              MyTextField(text: 'nom',controller: nom),
-              TypeInput(),
+              TypeInput(value: type,),
               MyTextField(text: 'Quantité',controller: quantity ,type:TextInputType.number,),
               const Spacer(),
               Align(
@@ -65,7 +71,9 @@ class _AddScreenState extends State<AddScreen> {
                    children: [
                     MyButton(text: 'Annuler',onPressed: () {},color: Colors.grey,),
                     const SizedBox(width: 10,),
-                     MyButton(text: 'Ajouter',onPressed: () {},),
+                     MyButton(text: 'Enregistrer',onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>DetailsScreen(product: widget.product,)));
+                     },width: 120.w,),
                                   
                    ],
                  ),
